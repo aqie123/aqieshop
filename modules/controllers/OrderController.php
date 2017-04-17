@@ -13,7 +13,6 @@ use app\modules\controllers\CommonController;
 
 class OrderController extends CommonController
 {
-  protected $mustlogin = ['list', 'detail', 'send'];
   public function actionList()     // 订单列表
   {
     $this->layout = "layout1";

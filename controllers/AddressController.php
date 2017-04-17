@@ -8,17 +8,13 @@ use app\models\Address;
 
 class AddressController extends CommonController
 {
-  protected $mustlogin = ['del', 'add'];
   public function actionAdd()    // 添加收货地址
   {
-      /*
     if (Yii::$app->session['isLogin'] != 1) {
         return $this->redirect(['member/auth']);
     }
     $loginname = Yii::$app->session['loginname'];
     $userid = User::find()->where('username = :name or useremail = :email', [':name' => $loginname, ':email' => $loginname])->one()->userid;
-    */
-    $userid = Yii::$app->user->id;
     if (Yii::$app->request->isPost) {
         $post = Yii::$app->request->post();
         $post['userid'] = $userid;
@@ -34,14 +30,11 @@ class AddressController extends CommonController
 
   public function actionDel()   // 删除收货地址
   {
-      /*
     if (Yii::$app->session['isLogin'] != 1) {
         return $this->redirect(['member/auth']);
     }
     $loginname = Yii::$app->session['loginname'];
     $userid = User::find()->where('username = :name or useremail = :email', [':name' => $loginname, ':email' => $loginname])->one()->userid;
-    */
-    $userid = Yii::$app->user->id;
     $addressid = Yii::$app->request->get('addressid');
     if (!Address::find()->where('userid = :uid and addressid = :aid', [':uid' => $userid, ':aid' => $addressid])->one()) {
         return $this->redirect($_SERVER['HTTP_REFERER']);

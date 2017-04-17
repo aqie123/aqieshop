@@ -1,7 +1,4 @@
-<?php use yii\bootstrap\ActiveForm;
-$this->title = "购物车";
-?>
-
+<?php use yii\bootstrap\ActiveForm; ?>
 
 </header>
 <!-- ============================================================= HEADER : END ============================================================= -->  
@@ -34,12 +31,12 @@ $this->title = "购物车";
 
                 <div class="col-xs-12 col-sm-3 no-margin">
                     <div class="quantity">
-                        <div class="le-quantity productnum">
+                        <div class="le-quantity">
                             <form>
-                                <a class="minus minu" href="javascript:;" disabled = "disabled"></a>
+                                <a class="minus minu" href="#reduce" disabled = "disabled"></a> 
                                     <!-- 购物车商品数量 -->
                                     <input id="<?php echo $product['cartid']; ?>" name="productnum" readonly="readonly" type="text" value="<?php echo $product['productnum']; ?>"  />
-                                <a class="plus plu" href="javascript:;"></a>
+                                <a class="plus plu" href="#add"></a>
                             </form>
                         </div>
                     </div>  
@@ -104,50 +101,5 @@ $this->title = "购物车";
 </section> 
 <?php ActiveForm::end(); ?>
 <!-- ============================================================= FOOTER ============================================================= -->
-
-<?php
-    $url = yii\helpers\Url::to(['cart/mod']);
-    $js = <<<JS
-    // 购物车数据绑定
-    
-    $('.productnum a').click(function(e){
-      e.preventDefault();
-      //alert("购物车页面")
-      var cartid = $(this).parent().find("input").attr('id');
-        // alert(cartid);
-        var num = $(this).parent().find("input").val();
-        // alert(num);
-        var total = parseFloat($(".value.pull-right span").html());
-        var price = parseFloat($(this).closest('.cart-item').find('.price span').html());
-        if( $(this).hasClass('minu') && num>1){
-            $(this).parent().find('input').val(parseInt(num, 10) - 1);
-            num--;
-            var p = total -price;
-        }else if( $(this).hasClass('plu')){
-            $(this).parent().find('input').val(parseInt(num, 10) + 1);
-            num++;
-            var p = total +price; 
-        }else{
-          var p = total;
-           num =1;  
-        }
-
-        //alert(num);
-        // alert(price)
-        // alert(p)
-        changeNum(cartid,num);
-        $(".value.pull-right span").html(p + "");
-        $(".value.pull-right.ordertotal span").html(p + "");
-      });
-
-    function changeNum(cartid,num){
-      $.get('$url',{'productnum':num,'cartid':cartid},function(data){
-          // location.reload();
-        });
-    }
-JS;
-$this->registerJs($js);
-
-
 
 

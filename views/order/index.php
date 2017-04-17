@@ -1,6 +1,3 @@
-<?php
-$this->title = "订单首页";
-?>
 <style type="text/css">
   .top10{
     margin: 50px auto;
@@ -51,7 +48,7 @@ $this->title = "订单首页";
           </td>
           <td>
             <?php if ($order->status == 220): ?>
-            <a class="tp-tag-a" href="<?php echo yii\helpers\Url::to(['order/received', 'orderid' => $order->orderid]) ?>" >确认收货
+            <a class="tp-tag-a" href="<?php echo yii\helpers\Url::to(['order/received', 'orderid' => $order->orderid]) ?>" target="_blank">确认收货
             </a>
             <a data="<?php echo $order->expressno ?>" class="tp-tag-a express wuliu">
               <span class="trade-operate-text">
@@ -78,36 +75,3 @@ $this->title = "订单首页";
   </div>
 <?php endforeach; ?>
 </div>
-
-<?php
-
-$url = yii\helpers\Url::to(['order/getexpress']);
-$js = <<<JS
-     // 查看物流
-    $(".expressshow").hide();
-    $(".wuliu.express").click(function(e){
-        // e.preventDefault();
-      });
-    $(".wuliu.express").hover(function(){
-      var a = $(this);
-      console.log(a.attr('data'));
-      if ($(this).attr('data') != 'ok') {
-        $.get('$url', {'expressno':$(this).attr('data')}, function(res) {
-          var str = "";
-          
-          console.log(res);return;
-          if (res.message = 'ok') {
-            for(var i = 0;i<res.data.length;i++) {
-              str += "<p>"+res.data[i].context+" "+res.data[i].time+" </p>";
-            }
-          }
-          a.find(".expressshow").html(str);
-            a.attr('data', 'ok');           // 避免重复请求
-          }, 'json');
-      }
-      $(this).find(".expressshow").show();
-    }, function(){
-      $(this).find(".expressshow").hide();
-    });
-JS;
-$this->registerJs($js);

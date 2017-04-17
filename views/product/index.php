@@ -1,6 +1,4 @@
-<?php
-$this->title = "商品列表";
-?>
+
 <style type="text/css">
     ul.pagination span{
         padding: 11px 32px;
@@ -58,7 +56,7 @@ $this->title = "商品列表";
                 <div class="row">
                     <div class="col-xs-4 col-sm-4 no-margin">
                         <a href="<?php echo yii\helpers\Url::to(['product/detail','productid'=>$pro['productid']]); ?>" class="thumb-holder">
-                            <img alt="" src="images/blank.gif" data-echo="<?php echo $pro['cover'] ?>-piclistsmall" />
+                            <img alt="" src="assets/images/blank.gif" data-echo="<?php echo $pro['cover'] ?>-piclistsmall" />
                         </a>
                     </div>
                     <div class="col-xs-8 col-sm-8 no-margin">
@@ -75,7 +73,7 @@ $this->title = "商品列表";
     </div><!-- /.widget -->
     <div class="widget">
       <div class="simple-banner">
-        <a href="#"><img alt="" class="img-responsive" src="images/blank.gif" data-echo="images/banners/banner-simple.jpg" /></a>
+        <a href="#"><img alt="" class="img-responsive" src="assets/images/blank.gif" data-echo="assets/images/banners/banner-simple.jpg" /></a>
     </div>
 </div>
 <!-- ========================================= FEATURED PRODUCTS ========================================= -->
@@ -87,7 +85,7 @@ $this->title = "商品列表";
             <div class="row">
                 <div class="col-xs-4 col-sm-4 no-margin">
                     <a href="<?php echo yii\helpers\Url::to(['product/detail','productid'=>$pro['productid']]); ?>" class="thumb-holder">
-                        <img alt="" src="images/blank.gif" data-echo="<?php echo $pro['cover']; ?>-piclistsmall" />
+                        <img alt="" src="assets/images/blank.gif" data-echo="<?php echo $pro['cover']; ?>-piclistsmall" />
                     </a>
                 </div>
                 <div class="col-xs-8 col-sm-8 no-margin">
@@ -126,7 +124,7 @@ $this->title = "商品列表";
                 <div class="product-item">
                     <div class="ribbon red"><span>hot</span></div> 
                     <div class="image">
-                        <img alt="" src="images/blank.gif" data-echo="<?php echo $pro['cover']; ?>-covermiddle" />
+                        <img alt="" src="assets/images/blank.gif" data-echo="<?php echo $pro['cover']; ?>-covermiddle" />
                     </div>
                     <div class="body">
                         <div class="title">
@@ -200,7 +198,7 @@ $this->title = "商品列表";
 
                                     <a href="<?php echo yii\helpers\Url::to(['product/detail', 'productid' => $pro['productid']]); ?>"> 
                                         <div class="image">
-                                            <img alt="" src="images/blank.gif" data-echo="<?php echo $pro['cover'];?>-covermiddle" />
+                                            <img alt="" src="assets/images/blank.gif" data-echo="<?php echo $pro['cover'];?>-covermiddle" />
                                         </div>
                                     </a>
                                     <div class="body">
@@ -273,7 +271,7 @@ $this->title = "商品列表";
                                 <div class="no-margin col-xs-12 col-sm-4 image-holder">
                                     <a href="<?php echo yii\helpers\Url::to(['product/detail', 'productid' => $pro['productid']]); ?>">
                                     <div class="image">
-                                        <img alt="" src="images/blank.gif" data-echo="<?php echo $pro['cover'] ?>-covermiddle" />
+                                        <img alt="" src="assets/images/blank.gif" data-echo="<?php echo $pro['cover'] ?>-covermiddle" />
                                     </div>
                                     </a>
                                 </div><!-- /.image-holder -->
@@ -286,7 +284,7 @@ $this->title = "商品列表";
                                         </div>
                                         <div class="brand">aqie</div>
                                         <div class="excerpt">
-                                            <p><?php echo mb_substr($pro['description'], 0, 250, 'utf-8'); ?></p>
+                                            <p><?php echo mb_substr($pro['desc'], 0, 250, 'utf-8'); ?></p>
                                         </div>
                                         <div class="addto-compare">
                                             <a class="btn-add-to-compare" href="#">加入对比清单</a>

@@ -3,55 +3,22 @@
 namespace app\modules\controllers;
 use yii\web\Controller;
 use Yii;
-use app\models\Category;   // 导入Categorymodel
+use app\models\Category;   // 导入model
 use app\modules\controllers\CommonController;
-use yii\web\Response;
+
+// 一般控制器里面有多少方法对应多少php页面;有多少model对应几张表
 
 class CategoryController extends CommonController
 {
-    protected $mustlogin = ['tree', 'list', 'add', 'mod', 'del', 'rename', 'delete'];
-    /**
-     * 返回json格式数据，产品分类那里
-     * @return array
-     */
-    public function actionTree()
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $model = new Category;
-        $data = $model->getPrimaryCate();
-        if (!empty($data)) {
-            return $data['data'];
-        }
-        return [];
-
-    }
-
-    /**
-     * 显示分类列表，同时分类
-     * @return string
-     */
-
+  // 显示分类列表
   public function actionList()   // 任务：每页显示五个顶级分类，点击时候查询出所有子分类
   {
     $this->layout = "layout1";
-    // 接收参数 页数
-    $page = (int)Yii::$app->request->get("page") ? (int)Yii::$app->request->get("page") : 1;
-      // 每页大小
-    $perpage = (int)Yii::$app->request->get("per-page") ? (int)Yii::$app->request->get("per-page") : 10;
     $model = new Category();
-//    $lists = $model->getTreeList();
-      $data = $model->getPrimaryCate();
-      // 返回分页 页数
-    return $this->render("list",['pager'=>$data['pages'],"page"=>$page,"perpage"=>$perpage]);
+    $lists = $model->getTreeList();
+    return $this->render("list",['lists'=>$lists]);
   }
 
-
-
-
-    /**
-     * 添加商品
-     * @return string
-     */
   public function actionAdd()
   {
     $model = new Category(); 
@@ -78,12 +45,7 @@ class CategoryController extends CommonController
     return $this->render("add",['list'=>$list,'model'=>$model]);
   }
 
-    /**
-     * 修改分类列表(被弃用)
-     * @return string
-     */
-    /*
-  public function actionMod()
+  public function actionMod()         // 修改分类列表
   {
     $this->layout = "layout1";
     $cateid = Yii::$app->request->get("cateid");    // 从页面接收数据,拿到model对象
@@ -97,14 +59,8 @@ class CategoryController extends CommonController
     $list = $model->getOptions();
     return $this->render('add',['model'=>$model,'list'=>$list]);
   }
-    */
 
-    /**
-     * 删除分类(弃用)
-     * @return Response
-     */
-    /*
-  public function actionDel()
+  public function actionDel()    // 删除分类
   {
     try{
       $cateid = Yii::$app->request->get('cateid');
@@ -124,71 +80,6 @@ class CategoryController extends CommonController
     }
     return $this->redirect(['category/list']);
   }
-    */
-
-
-    /**
-     * jstree通过ajax修改分类名称
-     * @return array
-     * @throws \yii\web\MethodNotAllowedHttpException
-     */
-    public function actionRename()
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        // 判断是否是ajax请求
-        if (!Yii::$app->request->isAjax) {
-            throw new \yii\web\MethodNotAllowedHttpException('Access Denied');
-        }
-        // 拿到post数据
-        $post = Yii::$app->request->post();
-        $newtext = $post['new'];
-        $old = $post['old'];
-        $id = (int)$post['id'];
-        if (empty($newtext) || empty($id)) {
-            return ['code' => -1, 'message' => '参数错误', 'data' => []];
-        }
-        if ($old == $newtext) {
-            return ['code' => 0, 'message' => 'ok', 'data' => []];
-        }
-        $model = Category::findOne($id);
-        // 定义场景
-        $model->scenario = 'rename';
-        $model->title = $newtext;
-        // save方法修改
-        if ($model->save()) {
-            return ['code' => 0, 'message' => 'ok', 'data' => []];
-        }
-        return ['code' => 1, 'message' => '更新失败', 'data' => []];
-    }
-
-    /**
-     * 删除商品分类代码
-     * @return array  json格式
-     * @throws \yii\web\MethodNotAllowedHttpException
-     */
-    public function actionDelete()
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        if (!Yii::$app->request->isAjax) {
-            throw new \yii\web\MethodNotAllowedHttpException('Access Denied');
-        }
-        $id = (int)Yii::$app->request->get("id");
-        if (empty($id)) {
-            return ['code' => -1, 'message' => '参数错误', 'data' => []];
-        }
-        $cate = Category::findOne($id);
-        if (empty($cate)) {
-            return ['code' => -1, 'message' => '参数错误', 'data' => []];
-        }
-        $total = Category::find()->where("parentid = :pid", [":pid" => $id])->count();
-        if ($total > 0) {
-            return ['code' => 1, 'message' => '该分类下包含子类，不允许删除', 'data' => []];
-        }
-        if ($cate->delete()) {
-            return ['code' => 0, 'message' => 'ok', 'data' => []];
-        }
-        return ['code' => 1, 'message' => '删除失败', 'data' => []];
-    }
 
 
 }

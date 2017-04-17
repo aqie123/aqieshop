@@ -1,14 +1,10 @@
 <?php
     use yii\bootstrap\ActiveForm;
     use yii\helpers\Html;
-    $this->title = '添加分类';
-    $this->params['breadcrumbs'][] = ['label' => '分类管理', 'url' => ['/admin/category/list']];
-    $this->params['breadcrumbs'][] = $this->title;
-    $this->registerCssFile('/admin/css/compiled/new-user.css');
 ?>
 
     <!-- main container -->
-
+    <div class="content">
         
         <div class="container-fluid">
             <div id="pad-wrapper" class="new-user">
@@ -70,5 +66,32 @@
                 </div>
             </div>
         </div>
+    </div>
     <!-- end main container -->
 
+
+    <!-- scripts -->
+    <script src="assets/admin/js/jquery-latest.js"></script>
+    <script src="assets/admin/js/bootstrap.min.js"></script>
+    <script src="assets/admin/js/theme.js"></script>  
+
+    <script type="text/javascript">
+        $(function () {
+
+            // toggle form between inline and normal inputs
+            var $buttons = $(".toggle-inputs button");
+            var $form = $("form.new_user_form");
+
+            $buttons.click(function () {
+                var mode = $(this).data("input");
+                $buttons.removeClass("active");
+                $(this).addClass("active");
+
+                if (mode === "inline") {
+                    $form.addClass("inline-input");
+                } else {
+                    $form.removeClass("inline-input");
+                }
+            });
+        });
+    </script>

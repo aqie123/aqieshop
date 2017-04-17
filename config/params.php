@@ -10,7 +10,7 @@ return [
       'order'=>10,
     ],
     'defaultValue'=>[
-      'avatar' =>'/admin/img/aqie.png'
+      'avatar' =>'assets/admin/img/aqie.png'
     ],
     'express' => [
       1 => '中通快递',

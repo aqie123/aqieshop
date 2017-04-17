@@ -1,42 +1,12 @@
-<?php
-use yii\bootstrap\ActiveForm;
-use yii\helpers\Html;
-$this->title = '相册列表';
-$this->params['breadcrumbs'][] = ['label' => '相册管理', 'url' => ['/admin/pictures/list']];
-$this->params['breadcrumbs'][] = $this->title;
-$this->registerCssFile('/admin/css/compiled/gallery.css');
-$css = <<<CSS
-.img-box>a{
-    display: inline-block;
-}
-.img-container{
+<link rel="stylesheet" href="assets/admin/css/compiled/gallery.css" type="text/css" media="screen" />
+<style type="text/css">
+    .img-container{
         position: relative;
     }
-span.icon.edit {
-    display: inline-block;
-    left:20%;
-}
-.gallery .img-container .icon.edit{
-    left:20%;
-}
-.gallery .img-container .icon.trash{
-    left:60%;
-}
-.gallery .img-container span.edit {
-    top: 30%;
-}
-.gallery .img-container span.trash {
-    top: 30%;
-}
-span.icon.trash {
-    display: inline-block;
-}
-CSS;
-$this->registerCss($css);
-?>
+</style>
 
   <!-- main container -->
-
+    <div class="content">
         
         <div class="container-fluid">
             <div id="pad-wrapper" class="gallery">
@@ -100,7 +70,7 @@ $this->registerCss($css);
                         
                         <div class="span3 new-img"> 
                             <div id="preview">  
-                                <img src="/admin/img/new-gallery-img.png"/>
+                                <img src="assets/admin/img/new-gallery-img.png"/>
                             </div>   
                         </div>
                     </div>
@@ -109,36 +79,37 @@ $this->registerCss($css);
                 <!-- end gallery wrapper -->
             </div>
         </div>
-        <ul>
-            <?php foreach($model as $pic): ?>
-                <span><?php echo $pic->createtime; ?></span>
-                <?php  $images = $pic->pictures;?>
-                <?php foreach((array)json_decode($images,true) as $k=>$picture) :?>
-                    <img src="<?php echo $picture; ?>-picsmall" width="100px" height="100px"/>
-                    <?php echo $pic->pictureid; ?>
-                    <a href="<?php echo yii\helpers\Url::to(['pictures/removepic','key'=>$k,'pictureid'=>$pic->pictureid]); ?>">删除</a>
-                <?php endforeach; ?>
-            <?php endforeach; ?>
-        </ul>
     </div>
-
+    <ul>
+        <?php foreach($model as $pic): ?>
+            <span><?php echo $pic->createtime; ?></span>
+            <?php  $images = $pic->pictures;?>
+            <?php foreach((array)json_decode($images,true) as $k=>$picture) :?>
+                <img src="<?php echo $picture; ?>-picsmall" width="100px" height="100px"/>
+                <?php echo $pic->pictureid; ?>
+                <a href="<?php echo yii\helpers\Url::to(['pictures/removepic','key'=>$k,'pictureid'=>$pic->pictureid]); ?>">删除</a>
+            <?php endforeach; ?>
+        <?php endforeach; ?>
+    </ul>
     <!-- end main container -->
-
-<?php
-
-$js = <<<JS
-    $(function(){
+    <script src="assets/admin/js/jquery-latest.js"></script>
+    <script src="assets/admin/js/bootstrap.min.js"></script>
+    <script src="assets/admin/js/theme.js"></script>
+    <script src="assets/admin/js/uploadpic.js"></script>
+    <script type="text/javascript">
+    function showdetail(){
+        $('.img-container').hover(function(){ 
+            $(this).children('.popup').show();
+        },function(){
+            $(this).children('.popup').hide();
+        });
+    }
+    // document.addEventListener("click","img-container",showdetail());
        
-        $(document).on('mouseover','.img-container',function(){
-            $('.img-container').hover(function(){ 
-                    $(this).children('.popup').show();
-                },function(){
-                    $(this).children('.popup').hide();
-                });
-        })
+    $(function(){
         $('.span3.new-img').click(function(){
             // alert(233);
-            $('.span3.img-container:last').after('<div class="span3 img-container" >\
+            $('.span3.img-container:last').after('<div class="span3 img-container" onmouseenter = "showdetail()" >\
                             <div class="img-box">\
                                 <span class="icon edit">\
                                     <i class="gallery-edit"></i>\
@@ -147,7 +118,7 @@ $js = <<<JS
                                     <i class="gallery-trash"></i>\
                                 </span>\
                                 <div id="preview">\
-                                    <img src="/admin/img/gallery2.jpg"/>\
+                                    <img src="assets/admin/img/gallery2.jpg"/>\
                                 </div>\
                                 <input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg">\
                                 <p class="title">\
@@ -162,7 +133,7 @@ $js = <<<JS
                                 <i class="close-pop table-delete"></i>\
                                 <h5>Edit Image</h5>\
                                 <div class="thumb">\
-                                    <img src="/admin/img/gallery-preview.jpg" />\
+                                    <img src="assets/admin/img/gallery-preview.jpg" />\
                                 </div>\
                                 <div class="title">\
                                     <input type="text" class="inline-input" placeholder="Title" />\
@@ -184,8 +155,7 @@ $js = <<<JS
 
         })
         
-        
+        showdetail();
     });
-JS;
-$this->registerJs($js);
-?>
+         
+    </script>

@@ -1,4 +1,4 @@
-<?php $this->title = "首页";?>
+
 <!-- ============================================================= HEADER : END ============================================================= --> 
 <div id="top-banner-and-menu">
   <div class="container">
@@ -79,7 +79,7 @@
                                 </div>
 
                                 <div class="dropdown-banner-holder">
-                                    <a href="#"><img alt="" src="images/banners/banner-side.png" /></a>
+                                    <a href="#"><img alt="" src="assets/images/banners/banner-side.png" /></a>
                                 </div>
                             </div>
                             <!-- ================================== MEGAMENU VERTICAL ================================== -->                        
@@ -114,7 +114,7 @@
                                 </div>
 
                                 <div class="dropdown-banner-holder">
-                                    <a href="#"><img alt="" src="images/banners/banner-side.png" /></a>
+                                    <a href="#"><img alt="" src="assets/images/banners/banner-side.png" /></a>
                                 </div>
                             </div>
                             <!-- ================================== MEGAMENU VERTICAL ================================== -->                            
@@ -203,7 +203,7 @@
 <section id="banner-holder" class="wow fadeInUp">
     <div class="container">
         <div class="col-xs-12 col-lg-6 no-margin banner">
-            <a>
+            <a href="category-grid-2.html">
                 <div class="banner-text theblue">
                     <h1>New Life</h1>
                     <span class="tagline">Introducing New Category</span>
@@ -211,13 +211,13 @@
                 <?php foreach($pic3 as $pic): ?>
                 <?php  $images = $pic->pictures;?>
                 <?php foreach((array)json_decode($images,true) as $k=>$picture) :?>
-                <img class="banner-image" alt="" src="images/blank.gif" data-echo="<?php echo $picture; ?>-adpicmiddle"  width="579px" height = "157px"/>
+                <img class="banner-image" alt="" src="assets/images/blank.gif" data-echo="<?php echo $picture; ?>-adpicmiddle"  width="579px" height = "157px"/>
                 <?php endforeach; ?>
                 <?php endforeach; ?>
             </a>
         </div>
         <div class="col-xs-12 col-lg-6 no-margin text-right banner">
-            <a>
+            <a href="category-grid-2.html">
                 <div class="banner-text right">
                     <h1>Time &amp; Style</h1>
                     <span class="tagline">Checkout new arrivals</span>
@@ -225,7 +225,7 @@
                 <?php foreach($pic4 as $pic): ?>
                 <?php  $images = $pic->pictures;?>
                 <?php foreach((array)json_decode($images,true) as $k=>$picture) :?>
-                <img class="banner-image" alt="" src="images/blank.gif" data-echo="<?php echo $picture; ?>-adpicmiddle" width="579px" height = "157px"/>
+                <img class="banner-image" alt="" src="assets/images/blank.gif" data-echo="<?php echo $picture; ?>-adpicmiddle" width="579px" height = "157px"/>
                 <?php endforeach; ?>
                 <?php endforeach; ?>
             </a>
@@ -256,16 +256,17 @@
                         <div class="col-sm-4 col-md-3  no-margin product-item-holder hover">
                             <div class="product-item">
                                 <?php if($pro->ishot): ?>
-                                    <div class="ribbon red"><span>hot</span></div>
-                                <?php endif;?>
-                                <?php if($pro->istui): ?>
-                                    <div class="ribbon blue"><span>tui!</span></div>
-                                <?php endif;?>
+                                <div class="ribbon red">
+                                    <span>hot</span>
+                                </div> 
+                                <?php endif; ?>
                                 <?php if($pro->issale): ?>
-                                    <div class="ribbon green"><span>Promotion</span></div>
-                                <?php endif;?>
+                                <div class="ribbon green">
+                                    <span>sale</span>
+                                </div>
+                                <?php endif; ?>
                                 <div class="image">
-                                    <img alt="<?php echo $pro->title; ?>" src="images/blank.gif" data-echo="<?php echo $pro->cover; ?>-covermiddle" />
+                                    <img alt="<?php echo $pro->title; ?>" src="assets/images/blank.gif" data-echo="<?php echo $pro->cover; ?>-covermiddle" />
                                 </div>
                                 <div class="body">
                                     <!-- <div class="label-discount green">-50% sale</div>  -->
@@ -292,13 +293,12 @@
                         </div>
                         <?php endforeach; ?>
                         
-                        <!--
                         <div class="loadmore-holder text-center">
                             <a class="btn-loadmore" href="#">
                                 <i class="fa fa-plus"></i>
                                 查看更多
                             </a>
-                        </div> -->
+                        </div> 
 
                     </div>
                 </div> 
@@ -309,17 +309,11 @@
                         <!-- 最新上架 -->
                         <div class="col-sm-4 col-md-3 no-margin product-item-holder hover">
                             <div class="product-item">
-                                <?php if($pro->ishot): ?>
-                                    <div class="ribbon red"><span>hot</span></div>
-                                <?php endif;?>
-                                <?php if($pro->istui): ?>
-                                    <div class="ribbon blue"><span>tui!</span></div>
-                                <?php endif;?>
-                                <?php if($pro->issale): ?>
-                                    <div class="ribbon green"><span>Promotion</span></div>
-                                <?php endif;?>
+                                <div class="ribbon blue"><span>new!</span></div>
+                                <div class="ribbon red"><span>sale</span></div> 
+                                <div class="ribbon green"><span>bestseller</span></div>
                                 <div class="image">
-                                    <img alt="<?php echo $pro->title; ?>" src="images/blank.gif" data-echo="<?php echo $pro->cover; ?>-covermiddle" />
+                                    <img alt="<?php echo $pro->title; ?>" src="assets/images/blank.gif" data-echo="<?php echo $pro->cover; ?>-covermiddle" />
                                 </div>
                                 <div class="body">
                                     <div class="label-discount clear"></div>
@@ -345,6 +339,12 @@
                         </div>
                         <?php endforeach; ?>
                     </div>
+                    <div class="loadmore-holder text-center">
+                        <a class="btn-loadmore" href="#">
+                            <i class="fa fa-plus"></i>
+                            更多商品
+                        </a>
+                    </div> 
                 </div>
 
                 <div class="tab-pane" id="top-sales">
@@ -352,17 +352,10 @@
                         <?php foreach($data['hot'] as $pro): ?>
                         <div class="col-sm-4 col-md-3 no-margin product-item-holder hover">
                             <div class="product-item">
-                                <?php if($pro->ishot): ?>
-                                    <div class="ribbon red"><span>hot</span></div>
-                                <?php endif;?>
-                                <?php if($pro->istui): ?>
-                                    <div class="ribbon blue"><span>tui!</span></div>
-                                <?php endif;?>
-                                <?php if($pro->issale): ?>
-                                    <div class="ribbon green"><span>Promotion</span></div>
-                                <?php endif;?>
+                                <div class="ribbon red"><span>sale</span></div> 
+                                <div class="ribbon green"><span>bestseller</span></div> 
                                 <div class="image">
-                                    <img alt="" src="images/blank.gif" data-echo="<?php echo $pro->cover; ?>-covermiddle" />
+                                    <img alt="" src="assets/images/blank.gif" data-echo="<?php echo $pro->cover; ?>-covermiddle" />
                                 </div>
                                 <div class="body">
                                     <div class="label-discount clear"></div>
@@ -390,7 +383,12 @@
                         </div>
                         <?php endforeach; ?>
                     </div>
-
+                    <div class="loadmore-holder text-center">
+                        <a class="btn-loadmore" href="#">
+                            <i class="fa fa-plus"></i>
+                            添加更多商品
+                        </a>
+                    </div> 
                 </div>
 
             </div>
@@ -403,7 +401,7 @@
 <!-- ========================================= BEST SELLERS ========================================= -->
 <section id="bestsellers" class="color-bg wow fadeInUp">
     <div class="container">
-        <h1 class="section-title">全部商品</h1>
+        <h1 class="section-title">最新商品</h1>
 
         <div class="product-grid-holder medium">
             <div class="col-xs-12 col-md-7 no-margin">
@@ -414,7 +412,7 @@
                     <div class="col-xs-12 col-sm-4 no-margin product-item-holder size-medium hover">
                         <div class="product-item">
                             <div class="image">
-                                <img alt="" src="images/blank.gif" data-echo="<?php echo $data['all'][$i]->cover; ?>-covermiddle" />
+                                <img alt="" src="assets/images/blank.gif" data-echo="<?php echo $data['all'][$i]->cover; ?>-covermiddle" />
                             </div>
                             <div class="body">
                                 <div class="label-discount clear"></div>
@@ -424,7 +422,6 @@
                                 <div class="brand">aqie</div>
                             </div>
                             <div class="prices">
-                                <div class="price-prev">￥<?php echo $data['all'][$i]->price; ?></div>
                                 <div class="price-current text-right">￥<?php echo $data['all'][$i]->saleprice; ?></div>
                             </div>
                             <div class="hover-area">
@@ -447,7 +444,7 @@
                     <div class="col-xs-12 col-sm-4 no-margin product-item-holder size-medium hover">
                         <div class="product-item">
                             <div class="image">
-                                <img alt="<?php echo $data['all'][$i]->title; ?>" src="images/blank.gif" data-echo="<?php echo $data['all'][$i]->cover; ?>-covermiddle" />
+                                <img alt="<?php echo $data['all'][$i]->title; ?>" src="assets/images/blank.gif" data-echo="<?php echo $data['all'][$i]->cover; ?>-covermiddle" />
                             </div>
                             <div class="body">
                                 <div class="label-discount clear"></div>
@@ -457,7 +454,6 @@
                                 <div class="brand">aqie</div>
                             </div>
                             <div class="prices">
-                                <div class="price-prev">￥<?php echo $data['all'][$i]->price; ?></div>
                                 <div class="price-current text-right">￥<?php echo $data['all'][$i]->saleprice; ?></div>
                             </div>
                             <div class="hover-area">
@@ -483,7 +479,7 @@
                     <div id="best-seller-single-product-slider" class="single-product-slider owl-carousel">
                         <div class="single-product-gallery-item" id="slide1">
                             <a data-rel="prettyphoto" href="<?php echo $last->cover; ?>">
-                                <img alt="<?php echo $last->title; ?>" src="images/blank.gif" data-echo="<?php echo $last->cover; ?>-coverbig" />
+                                <img alt="<?php echo $last->title; ?>" src="assets/images/blank.gif" data-echo="<?php echo $last->cover; ?>-coverbig" />
                             </a>
                         </div><!-- /.single-product-gallery-item -->
 
@@ -502,7 +498,7 @@
                         <ul>
                             <li>
                                 <a class="horizontal-thumb active" data-target="#best-seller-single-product-slider" data-slide="0" href="#slide1">
-                                    <img alt="<?php echo $last->title; ?>" src="images/blank.gif" data-echo="<?php echo $last->cover; ?>-piclistsmall" />
+                                    <img alt="<?php echo $last->title; ?>" src="assets/images/blank.gif" data-echo="<?php echo $last->cover; ?>-piclistsmall" />
                                 </a>
                             </li>
                             <?php $i = 2; ?>
@@ -510,7 +506,7 @@
                             
                             <li>
                                 <a class="horizontal-thumb" data-target="#best-seller-single-product-slider" data-slide="<?php echo $i-1; ?>" href="#slide2">
-                                    <img alt="" src="images/blank.gif" data-echo="<?php echo $pic; ?>-piclistsmall" />
+                                    <img alt="" src="assets/images/blank.gif" data-echo="<?php echo $pic; ?>-piclistsmall" />
                                 </a>
                             </li>
                             <?php $i++; ?>
@@ -526,7 +522,6 @@
                         <div class="brand">aqie</div>
                     </div>
                     <div class="prices text-right">
-                        <div class="price-prev">￥<?php echo $last->price; ?></div>
                         <div class="price-current inline">￥ <?php echo $last->saleprice; ?> </div>
                         <a href="cart.html" class="le-button big inline">加入购物车</a>
                     </div>
@@ -544,7 +539,7 @@
     <div class="carousel-holder hover">
 
         <div class="title-nav">
-            <h2 class="h1">促销产品</h2>
+            <h2 class="h1">所有商品</h2>
         <div class="nav-holder">
           <a href="#prev" data-target="#owl-recently-viewed" class="slider-prev btn-prev fa fa-angle-left"></a>
           <a href="#next" data-target="#owl-recently-viewed" class="slider-next btn-next fa fa-angle-right"></a>
@@ -552,17 +547,14 @@
         </div><!-- /.title-nav -->
 
           <div id="owl-recently-viewed" class="owl-carousel product-grid-holder">
-            <?php foreach($data['sale'] as $pro): ?>
+            <?php foreach($data['all'] as $pro): ?>
             <div class="no-margin carousel-item product-item-holder size-small hover">
                 <div class="product-item">
-                    <?php if($pro->ishot): ?>
-                    <div class="ribbon red"><span>hot</span></div>
-                    <?php endif;?>
-                    <?php if($pro->istui): ?>
-                    <div class="ribbon blue"><span>tui!</span></div>
-                    <?php endif;?>
+                    <div class="ribbon red"><span>sale</span></div>
+                    <div class="ribbon blue"><span>new!</span></div> 
+                    <div class="ribbon green"><span>bestseller</span></div>  
                     <div class="image">
-                      <img alt="" src="images/blank.gif" data-echo="<?php echo $pro->cover; ?>-covermiddle" />
+                      <img alt="" src="assets/images/blank.gif" data-echo="<?php echo $pro->cover; ?>-covermiddle" />
                     </div>
                     <div class="body">
                       <div class="title">
@@ -608,49 +600,49 @@
 
                 <div class="carousel-item">
                     <a href="#">
-                        <img alt="" src="images/brands/brand-01.jpg" />
+                        <img alt="" src="assets/images/brands/brand-01.jpg" />
                     </a>
                 </div><!-- /.carousel-item -->
                 
                 <div class="carousel-item">
                     <a href="#">
-                        <img alt="" src="images/brands/brand-02.jpg" />
+                        <img alt="" src="assets/images/brands/brand-02.jpg" />
                     </a>
                 </div><!-- /.carousel-item -->
                 
                 <div class="carousel-item">
                     <a href="#">
-                        <img alt="" src="images/brands/brand-03.jpg" />
+                        <img alt="" src="assets/images/brands/brand-03.jpg" />
                     </a>
                 </div><!-- /.carousel-item -->
                 
                 <div class="carousel-item">
                     <a href="#">
-                        <img alt="" src="images/brands/brand-04.jpg" />
+                        <img alt="" src="assets/images/brands/brand-04.jpg" />
                     </a>
                 </div><!-- /.carousel-item -->
 
                 <div class="carousel-item">
                     <a href="#">
-                        <img alt="" src="images/brands/brand-01.jpg" />
+                        <img alt="" src="assets/images/brands/brand-01.jpg" />
                     </a>
                 </div><!-- /.carousel-item -->
 
                 <div class="carousel-item">
                     <a href="#">
-                        <img alt="" src="images/brands/brand-02.jpg" />
+                        <img alt="" src="assets/images/brands/brand-02.jpg" />
                     </a>
                 </div><!-- /.carousel-item -->
 
                 <div class="carousel-item">
                     <a href="#">
-                        <img alt="" src="images/brands/brand-03.jpg" />
+                        <img alt="" src="assets/images/brands/brand-03.jpg" />
                     </a>
                 </div><!-- /.carousel-item -->
 
                 <div class="carousel-item">
                     <a href="#">
-                        <img alt="" src="images/brands/brand-04.jpg" />
+                        <img alt="" src="assets/images/brands/brand-04.jpg" />
                     </a>
                 </div><!-- /.carousel-item -->
 

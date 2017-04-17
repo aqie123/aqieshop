@@ -10,16 +10,12 @@ use Yii;
 
 class CartController extends CommonController{
   public $layout = "layout2";
-  protected $mustlogin = ['index', 'mod', 'add', 'del'];
 
   public function actionIndex(){     // 购物车商品展示页面
-      /*
     if(Yii::$app->session['isLogin']!=1){
       return $this->redirect(['member/auth']);
     }
     $userid = User::find()->where('username = :name',[':name'=>Yii::$app->session['loginname']])->one()->userid;
-      */
-    $userid = Yii::$app->user->id;
     $cart = Cart::find()->where('userid = :uid',[':uid'=>$userid])->asArray()->all();
     $data = [];
     // 根据productid进行查询
@@ -37,21 +33,15 @@ class CartController extends CommonController{
 
   public function actionAdd()    // 将商品加入购物车,分两种加入方式
   {
-      /*
     if (Yii::$app->session['isLogin'] != 1) {
         return $this->redirect(['member/auth']);
     }
     $userid = User::find()->where('username = :name',[':name'=>Yii::$app->session['loginname']])->one()->userid;
-    */
-     $userid = Yii::$app->user->id;
     if(Yii::$app->request->isPost) {      // 商品详情页
       $post = Yii::$app->request->post();
-        //var_dump($post);die;
       $num = Yii::$app->request->post()['productnum'];
       $data['Cart'] = $post;
       $data['Cart']['userid'] = $userid;
-      // echo $userid;die;
-        //echo \Yii::$app->user->identity->username;die;
     }
 
     if(Yii::$app->request->isGet) {     //商品列表页    这里页面接收get过来productid
@@ -69,15 +59,12 @@ class CartController extends CommonController{
     }
     $data['Cart']['createtime'] = time();
     $model->load($data);
-    $model->save();    // cart::find产生就更新，new cart就创建
+    $model->save();
     return $this->redirect(['cart/index']);     
   }
 
 
-    /**
-     * 修改购物车商品数量
-     */
-  public function actionMod()
+  public function actionMod()    // 修改购物车商品数量
   {
     $cartid = Yii::$app->request->get("cartid");
     $productnum = Yii::$app->request->get("productnum");

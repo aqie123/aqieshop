@@ -51,16 +51,3 @@ $this->title = 'My Yii Application';
 
     </div>
 </div>
-
-<?php
-// 按需加载
-    $this->registerJsFile('js/2.js',['position'=>\yii\web\View::POS_HEAD]);
-    $this->registerCssFile('css/3.css',['depends'=>'yii\bootstrap\BootstrapAsset']);
-    $js = <<<JS
-        console.log('test js block aqie');
-JS;
-    $this->registerJs($js);
-    $css = 'body{background-color:red;}';
-    $this->registerCss($css);
-
-?>

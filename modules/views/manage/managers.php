@@ -1,15 +1,7 @@
 
 
-<?php
-use yii\bootstrap\ActiveForm;
-use yii\helpers\Html;
-$this->title = '管理员列表';
-$this->params['breadcrumbs'][] = ['label' => '管理员管理', 'url' => ['/admin/manage/managers']];
-$this->params['breadcrumbs'][] = $this->title;
-$this->registerCssFile('/admin/css/compiled/user-list.css');
-?>
   <!-- main container -->
-
+    <div class="content">
       
         <div class="container-fluid">
             <div id="pad-wrapper" class="users-list">
@@ -114,14 +106,7 @@ $this->registerCssFile('/admin/css/compiled/user-list.css');
                             <td>
                                 <?php echo date('Y-m-d H:i:s',$manager->createtime); ?>
                             </td>   
-                            <td class="align-right">
-                                <a href="<?php echo yii\helpers\Url::to(['manage/assign', 'adminid' => $manager->adminid]) ?>">
-                                    授权
-                                </a>
-                                <a href="<?php echo yii\helpers\Url::to(['manage/del','adminid'=>$manager->adminid]); ?>">
-                                    删除
-                                </a>
-                            </td>
+                            <td class="align-right"><a href="<?php echo yii\helpers\Url::to(['manage/del','adminid'=>$manager->adminid]); ?>">删除</a></td>
                         </tr>
                         <?php endforeach; ?>
                         </tbody>
@@ -140,6 +125,8 @@ $this->registerCssFile('/admin/css/compiled/user-list.css');
                 <!-- end users table -->
             </div>
         </div>
-
+    </div>
     <!-- end main container -->
-
+    <script src="assets/admin/js/jquery-latest.js"></script>
+    <script src="assets/admin/js/bootstrap.min.js"></script>
+    <script src="assets/admin/js/theme.js"></script>

@@ -4,7 +4,7 @@ namespace app\models;
 
 use yii\db\ActiveRecord;
 /**
-* 用户详细信息
+* 
 */
 class Profile extends ActiveRecord
 {

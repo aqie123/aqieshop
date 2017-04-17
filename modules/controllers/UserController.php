@@ -12,13 +12,7 @@ use app\modules\controllers\CommonController;
 
 class UserController extends CommonController
 {
-  protected $mustlogin = ['users', 'reg', 'del'];
-
-    /**
-     * 用户列表
-     * @return string
-     */
-  public function actionUsers()
+  public function actionUsers()   // 用户列表
   {
     
     $model = User::find()->joinWith('profile');   //连表查询
@@ -30,11 +24,7 @@ class UserController extends CommonController
     return $this->render('users',['users'=>$users,'pager'=>$pager]);
   }
 
-    /**
-     * 添加用户
-     * @return string
-     */
-  public function actionReg()
+  public function actionReg()   // 添加用户
   {
     $this->layout = "layout1";
     $model = new User;
@@ -51,10 +41,7 @@ class UserController extends CommonController
     return $this->render("reg",['model' =>$model]);
   }
 
-    /**
-     * 删除用户
-     */
-  public function actionDel()
+  public function actionDel()  // 删除用户
   {
     try{
       $userid= (int)Yii::$app->request->get('userid');
