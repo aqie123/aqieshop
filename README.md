@@ -30,6 +30,7 @@
     * 首页：www.aqie.com (假设网站名是这个) 
     * http://www.sxlzrc.com(本地解析这个域名可以登陆qq)
     * 后台首页： www.aqie.com/aqieback   
+    用户名： admin 密码：123
     * 图片存在七牛图床,需要联网加载
 - master 全部代码 删除冗余注释
 - dev    全部代码yii2完整版
