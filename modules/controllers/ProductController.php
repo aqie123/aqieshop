@@ -11,7 +11,13 @@ use app\modules\controllers\CommonController;
 
 class ProductController extends CommonController
 {
-  public function actionList()     // 商品列表
+  protected $mustlogin = ['list', 'add', 'mod', 'on', 'off', 'removepic', 'del'];
+
+    /**
+     * 商品列表
+     * @return string
+     */
+  public function actionList()
   {
     $model = Product::find()->joinWith('category');  // 在product model里面方法返回
     $count = $model->count();
@@ -25,14 +31,13 @@ class ProductController extends CommonController
 
   public function actionAdd()    // 商品添加
   {
-    $this->layout = false;
+    $this->layout = "layout1";
     $model = new Product;
     $cate = new Category;
     $list = $cate->getOptions();
     unset($list[0]);           // 把默认去掉
     if(Yii::$app->request->isPost){
       $post = Yii::$app->request->post();
-        // var_dump($post);die;
       $pics = $this->upload();
       if(!$pics) {
         $model->addError('cover','封面不能为空');
@@ -93,18 +98,19 @@ class ProductController extends CommonController
 
   public function actionMod()    // 修改商品  和添加商品调用同一个模板
   {
-    $this->layout = false;
     $cate = new Category;
     $list = $cate->getOptions();
-    unset($list[0]);
+    unset($list[0]);        // array_shift($list);
     $productid = Yii::$app->request->get("productid");
-    $model = Product::find()->where("productid = :pid",[':pid'=>$productid])->one();
+    $model = Product::find()
+        ->where("productid = :pid",
+            [':pid'=>$productid])
+        ->one();
     if(Yii::$app->request->isPost) {      // 如果提交成功
       $post = Yii::$app->request->post();
-        // var_dump($post);die;
+      // var_dump($post);die;
       $qiniu = new Qiniu(Product::AK,Product::SK,Product::DOMAIN,Product::BUCKET);
       $post['Product']['cover'] = $model->cover;
-      // echo "<pre>";var_dump($_FILES);die;
       if($_FILES["Product"]['error']['cover'] ==0) {
         $key = uniqid();
         $qiniu->uploadFile($_FILES['Product']['tmp_name']['cover'],$key);

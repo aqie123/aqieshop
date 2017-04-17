@@ -1,6 +1,11 @@
-<?php use yii\bootstrap\ActiveForm; ?>
+<?php
+use yii\bootstrap\ActiveForm;
+$this->title = "确认订单";
+
+?>
 </header>
-<!-- ============================================================= HEADER : END ============================================================= -->   <!-- ========================================= CONTENT ========================================= -->
+<!-- ============================================================= HEADER : END
+============================================================= -->   <!-- ========================================= CONTENT ========================================= -->
 <style type="text/css">
     .field-row input[type="radio"] {
         width:30px;
@@ -15,7 +20,7 @@
                 <?php foreach($addresses as $key =>$address): ?>
                     <div class="row field-row">
                         <div class="col-xs-12">
-                            <input  class="le-checkbox big address" type="radio" name="address" value="<?php echo $address['addressid']; ?>" <?php if ($key == 0) {echo 'checked = "checked"';}?> />
+                            <input  class="le-checkbox big address" type="radio" name="address" value="<?php echo $address['addressid']; ?>" />
                             <a class="simple-link bold" href="#"><?php echo $address['lastname'].$address['firstname']."　".$address['email']."　".$address['telephone']; ?></a>
                             <a style="margin-left:45px" href="<?php echo yii\helpers\Url::to(['address/del', 'addressid' => $address['addressid']]) ?>">删除</a>
                         </div>
@@ -25,7 +30,11 @@
 
             <div class="billing-address" style="display:none;">
                 <h2 class="border h1">新建联系人</h2>
-                    <?php ActiveForm::begin([
+                    <?php
+                    if(Yii::$app->session->hasFlash('info')) {
+                        echo Yii::$app->session->getFlash('info');
+                    }
+                    ActiveForm::begin([
                         'action'=>['address/add'],
                     ]) ?>
                     <div class="row field-row">
@@ -118,7 +127,7 @@
                 
             </section><!-- /#your-order -->
             <!-- 传递购物地址id -->
-            <input type="hidden" name="addressid" value="1">
+            <input type="hidden" name="addressid" value>
             <div id="total-area" class="row no-margin">
                 <div class="col-xs-12 col-lg-4 col-lg-offset-8 no-margin-right">
                     <div id="subtotal-holder">
@@ -129,10 +138,11 @@
                             </li>
                             <li>
                                 <label>选择快递</label>
+                                <br><br>
                                 <div class="value">
                                     <div class="radio-group">
                                         <?php foreach($express as $k => $e): ?>
-                                        <!-- <?php $checked = ""; if($k==1) $checked = "checked" ?> -->
+                                         <?php $checked = ""; if($k==1) $checked = "checked" ?>
                                         <input class="le-radio express" type="radio" name="expressid" value="<?php echo $k; ?>" data="<?php echo $expressPrice[$k]; ?>" <?php if ($k == 3) {echo 'checked = "checked"';}?> >
                                         <div class="radio-label bold">
                                             <?php echo $e; ?>
@@ -147,7 +157,7 @@
                         <ul id="total-field" class="tabled-data inverse-bold ">
                             <li>
                                 <label>订单总价tal</label>
-                                <div class="value" id="ototal">￥<span><?php echo $total+20; ?></span></div>
+                                <div class="value" id="ototal">￥<span><?php echo $total; ?></span></div>
                             </li>
                         </ul><!-- /.tabled-data -->
 
@@ -180,3 +190,32 @@
 <!-- 传递orderid -->
 <input type="hidden" name="orderid" value="<?php echo (int)\Yii::$app->request->get("orderid"); ?>">
 <?php ActiveForm::end(); ?>
+
+<?php
+$js = <<<JS
+    // 运送方式改变总费用
+    var total = parseFloat($("#total span").html());
+    // alert(total)
+    $(".le-radio.express").click(function(){
+
+      var ototal = parseFloat($(this).attr('data')) + total;
+        // alert(ototal)
+        $("#ototal span").html(ototal);
+      });
+
+
+    // 点击显示新增收货地址
+    $("#createlink").click(function(){
+      $(".billing-address").slideDown();
+    });
+
+    // 获取收货地址id
+    $("input.address").click(function(){
+      var addressid = $(this).val();
+      $("input[name=addressid]").val(addressid);
+    });
+JS;
+$this->registerJs($js);
+
+
+

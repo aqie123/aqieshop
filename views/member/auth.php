@@ -2,6 +2,7 @@
     //帮助创建表单
     use yii\bootstrap\ActiveForm;
     use yii\helpers\Html;
+    $this->title = "前台登录";
 ?>  
 
 <!-- ========================================= NAVIGATION : END ========================================= -->
@@ -47,12 +48,12 @@
       <div class="col-md-6">
         <section class="section sign-in inner-right-xs">
           <h2 class="bordered">用户登录</h2>
-          <p>Hello, Welcome to your account</p>
+          <p>qq登录需要本地解析域名才有效</p>
 
           <div class="social-auth-buttons">
             <div class="row">
               <div class="col-md-6">
-                <button class="btn-block btn-lg btn btn-facebook"><i class="fa fa-qq"></i> Sign In with QQ</button>
+                <button class="btn-block btn-lg btn btn-facebook" id="login_qq"><i class="fa fa-qq"></i> Sign In with QQ</button>
               </div>
               <div class="col-md-6">
                 <button class="btn-block btn-lg btn btn-twitter"><i class="fa fa-weibo"></i> Sign In with Weibo</button>
@@ -70,8 +71,8 @@
                   'action' =>['member/auth'],
                 ]);
           ?>
-            <?php echo $form->field($model,'loginname')->textInput(['class'=>'le-input']); ?>
-            <?php echo $form->field($model,'userpass')->textInput(['class'=>'le-input']); ?>
+            <?php echo $form->field($model,'loginname')->textInput(['class'=>'le-input','placeholder'=>'aqie']); ?>
+            <?php echo $form->field($model,'userpass')->textInput(['class'=>'le-input','placeholder'=>'123']); ?>
             <div class="field-row clearfix">
               <span class="pull-left">
                 <?php echo $form->field($model,'rememberMe')->checkbox([
@@ -135,3 +136,18 @@
   </div><!-- /.container -->
 </main><!-- /.authentication -->
 <!-- ========================================= MAIN : END ========================================= -->   <!-- ============================================================= FOOTER ============================================================= -->
+<?php
+$url = yii\helpers\Url::to(['member/qqlogin']);
+
+$js = <<<JS
+
+    var qqbtn = document.getElementById("login_qq");
+    qqbtn.onclick = function(){
+        window.location.href="$url";
+    };
+
+JS;
+$this->registerJs($js);
+
+?>
+

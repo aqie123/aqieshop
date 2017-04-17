@@ -70,7 +70,9 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        // 是否是登录
         if (!Yii::$app->user->isGuest) {
+            // 返回首页
             return $this->goHome();
         }
 

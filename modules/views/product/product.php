@@ -1,9 +1,12 @@
-
+<?php
+$this->title = '商品列表';
+$this->params['breadcrumbs'][] = ['label' => '商品管理', 'url' => ['/admin/product/list']];
+$this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile('/admin/css/compiled/user-list.css');
+?>
     
 
     <!-- main container -->
-    <div class="content">
-      
         <div class="container-fluid">
             <div id="pad-wrapper" class="users-list">
                 <div class="row-fluid header">
@@ -155,11 +158,7 @@
                 <!-- end users table -->
             </div>
         </div>
-    </div>
     <!-- end main container -->
 
 
-    <!-- scripts -->
-    <script src="assets/admin/js/jquery-latest.js"></script>
-    <script src="assets/admin/js/bootstrap.min.js"></script>
-    <script src="assets/admin/js/theme.js"></script>
+

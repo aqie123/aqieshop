@@ -1,10 +1,12 @@
-
-
-    
-
-    <!-- main container -->
-    <div class="content">
-
+<?php
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
+$this->title = '后台首页';
+$this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile('/admin/css/lib/jquery-ui-1.10.2.custom.css');
+$this->registerCssFile('/admin/css/compiled/index.css');
+?>
+<!-- main container -->
         <div class="container-fluid">
 
             <!-- upper main stats -->
@@ -105,7 +107,7 @@
                                     <td>
                                         <input type="checkbox" />
                                         <div class="img">
-                                            <img src="assets/admin/img/table-img.png" />
+                                            <img src="/admin/img/table-img.png" />
                                         </div>
                                         <a href="#">There are many variations </a>
                                     </td>
@@ -126,7 +128,7 @@
                                     <td>
                                         <input type="checkbox" />
                                         <div class="img">
-                                            <img src="assets/admin/img/table-img.png" />
+                                            <img src="/admin/img/table-img.png" />
                                         </div>
                                         <a href="#">Internet tend</a>
                                     </td>
@@ -146,7 +148,7 @@
                                     <td>
                                         <input type="checkbox" />
                                         <div class="img">
-                                            <img src="assets/admin/img/table-img.png" />
+                                            <img src="/admin/img/table-img.png" />
                                         </div>
                                         <a href="#">Many desktop publishing </a>
                                     </td>
@@ -166,7 +168,7 @@
                                     <td>
                                         <input type="checkbox" />
                                         <div class="img">
-                                            <img src="assets/admin/img/table-img.png" />
+                                            <img src="/admin/img/table-img.png" />
                                         </div>
                                         <a href="#">Generate Lorem </a>
                                     </td>
@@ -187,7 +189,7 @@
                                     <td>
                                         <input type="checkbox" />
                                         <div class="img">
-                                            <img src="assets/admin/img/table-img.png" />
+                                            <img src="/admin/img/table-img.png" />
                                         </div>
                                         <a href="#">Internet tend</a>
                                     </td>
@@ -220,22 +222,16 @@
                 <!-- end table sample -->
             </div>
         </div>
-    </div>
 
-     <!-- scripts -->
-    <script src="assets/admin/js/jquery-latest.js"></script>
-    <script src="assets/admin/js/bootstrap.min.js"></script>
-    <script src="assets/admin/js/jquery-ui-1.10.2.custom.min.js"></script>
-    <!-- knob -->
-    <script src="assets/admin/js/jquery.knob.js"></script>
-    <!-- flot charts -->
-    <script src="assets/admin/js/jquery.flot.js"></script>
-    <script src="assets/admin/js/jquery.flot.stack.js"></script>
-    <script src="assets/admin/js/jquery.flot.resize.js"></script>
-    <script src="assets/admin/js/theme.js"></script>
 
-    <script type="text/javascript">
-        $(function () {
+<?php
+$this->registerJsFile('admin/js/jquery-ui-1.10.2.custom.min.js',['depends' => \yii\web\JqueryAsset::className()]);
+$this->registerJsFile('admin/js/jquery.knob.js',['depends' => \yii\web\JqueryAsset::className()]);
+$this->registerJsFile('admin/js/jquery.flot.js',['depends' => \yii\web\JqueryAsset::className()]);
+$this->registerJsFile('admin/js/jquery.flot.stack.js',['depends' => \yii\web\JqueryAsset::className()]);
+$this->registerJsFile('admin/js/jquery.flot.resize.js',['depends' => \yii\web\JqueryAsset::className()]);
+$js = <<<JS
+    $(function () {
 
             // jQuery Knobs
             $(".knob").knob();
@@ -346,6 +342,10 @@
                 }
             });
         });
-    </script>
+JS;
+$this->registerJs($js);
+
+
+
 
 

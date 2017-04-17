@@ -1,6 +1,11 @@
-<?php use yii\bootstrap\ActiveForm; ?>
+<?php
+use yii\bootstrap\ActiveForm;
+$this->title = "商品详情";
+
+?>
 </header>
-<!-- ============================================================= HEADER : END ============================================================= -->   <div id="single-product">
+<!-- ============================================================= HEADER : END ============================================================= -->
+<div id="single-product">
 <div class="container">
 
     <div class="no-margin col-xs-12 col-sm-6 col-md-5 gallery-holder">
@@ -8,14 +13,14 @@
             <div id="owl-single-product">
                 <div class="single-product-gallery-item" id="slide1">
                     <a data-rel="prettyphoto" href="<?php echo $product['cover']; ?>-coverbig">
-                        <img class="img-responsive" alt="" src="assets/images/blank.gif" data-echo="<?php echo $product['cover']; ?>-coverbig" />
+                        <img class="img-responsive" alt="" src="images/blank.gif" data-echo="<?php echo $product['cover']; ?>-coverbig" />
                     </a>
                 </div><!-- /.single-product-gallery-item -->
                 <?php $i = 2; ?>
                 <?php foreach((array)json_decode($product['pics'],true) as $k=>$pic): ?>
                 <div class="single-product-gallery-item" id="slide<?php echo $i; ?>"> 
                     <a data-rel="prettyphoto" href="<?php echo $pic; ?>-coverbig">
-                        <img class="img-responsive" alt="" src="assets/images/blank.gif" data-echo="<?php echo $pic; ?>-coverbig" />
+                        <img class="img-responsive" alt="" src="images/blank.gif" data-echo="<?php echo $pic; ?>-coverbig" />
                     </a>
                 </div><!-- /.single-product-gallery-item -->
                 <?php $i++; ?>
@@ -27,12 +32,12 @@
 
                 <div id="owl-single-product-thumbnails">
                     <a class="horizontal-thumb active" data-target="#owl-single-product" data-slide="0" href="#slide1">
-                        <img width="67" alt="" src="assets/images/blank.gif" data-echo="<?php echo $product['cover']; ?>-piclistsmall" />
+                        <img width="67" alt="" src="images/blank.gif" data-echo="<?php echo $product['cover']; ?>-piclistsmall" />
                     </a>
                     <?php $i = 2; ?>
                     <?php  foreach((array)json_decode($product['pics'],true) as $k=>$pic): ?> 
                     <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="<?php echo $i-1; ?>" href="#slide2">
-                        <img width="67" alt="" src="assets/images/blank.gif" data-echo="<?php echo $pic; ?>-piclistsmall" />
+                        <img width="67" alt="" src="images/blank.gif" data-echo="<?php echo $pic; ?>-piclistsmall" />
                     </a>
                     <?php $i++; ?>
                     <?php endforeach; ?>  
@@ -70,7 +75,7 @@
             </div>
 
             <div class="excerpt">
-                <p><?php echo $product['desc']; ?></p>
+                <p><?php echo $product['description']; ?></p>
             </div>
             
             <div class="prices">
@@ -86,7 +91,7 @@
                 <?php $form = ActiveForm::begin([
                     'action' => yii\helpers\Url::to(['cart/add']),
                 ]) ?>
-                <div class="le-quantity">
+                <div class="le-quantity productdetail">
                     <a class="minus minu" href="#reduce"></a>
                     <input name="productnum" readonly="readonly" type="text" value="1" />
                     <a class="plus plu" href="#add"></a>
@@ -202,7 +207,7 @@
                             <div class="row no-margin">
                                 <div class="col-lg-1 col-xs-12 col-sm-2 no-margin">
                                     <div class="avatar">
-                                        <img alt="avatar" src="assets/images/default-avatar.jpg">
+                                        <img alt="avatar" src="images/default-avatar.jpg">
                                     </div><!-- /.avatar -->
                                 </div><!-- /.col -->
 
@@ -233,7 +238,7 @@
                             <div class="row no-margin">
                                 <div class="col-lg-1 col-xs-12 col-sm-2 no-margin">
                                     <div class="avatar">
-                                        <img alt="avatar" src="assets/images/default-avatar.jpg">
+                                        <img alt="avatar" src="images/default-avatar.jpg">
                                     </div><!-- /.avatar -->
                                 </div><!-- /.col -->
 
@@ -264,7 +269,7 @@
                             <div class="row no-margin">
                                 <div class="col-lg-1 col-xs-12 col-sm-2 no-margin">
                                     <div class="avatar">
-                                        <img alt="avatar" src="assets/images/default-avatar.jpg">
+                                        <img alt="avatar" src="images/default-avatar.jpg">
                                     </div><!-- /.avatar -->
                                 </div><!-- /.col -->
 
@@ -353,7 +358,7 @@
       <div class="product-item">
         <div class="ribbon red"><span>sale</span></div> 
         <div class="image">
-          <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-11.jpg" />
+          <img alt="" src="images/blank.gif" data-echo="images/products/product-11.jpg" />
       </div>
       <div class="body">
           <div class="title">
@@ -380,7 +385,7 @@
   <div class="product-item">
     <div class="ribbon blue"><span>new!</span></div> 
     <div class="image">
-      <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-12.jpg" />
+      <img alt="" src="images/blank.gif" data-echo="images/products/product-12.jpg" />
   </div>
   <div class="body">
       <div class="title">
@@ -407,7 +412,7 @@
   <div class="product-item">
 
     <div class="image">
-      <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-13.jpg" />
+      <img alt="" src="images/blank.gif" data-echo="images/products/product-13.jpg" />
   </div>
   <div class="body">
       <div class="title">
@@ -434,7 +439,7 @@
   <div class="product-item">
     <div class="ribbon blue"><span>new!</span></div> 
     <div class="image">
-      <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-14.jpg" />
+      <img alt="" src="images/blank.gif" data-echo="images/products/product-14.jpg" />
   </div>
   <div class="body">
       <div class="title">
@@ -461,7 +466,7 @@
   <div class="product-item">
     <div class="ribbon green"><span>bestseller</span></div> 
     <div class="image">
-      <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-15.jpg" />
+      <img alt="" src="images/blank.gif" data-echo="images/products/product-15.jpg" />
   </div>
   <div class="body">
       <div class="title">
@@ -488,7 +493,7 @@
   <div class="product-item">
 
     <div class="image">
-      <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-16.jpg" />
+      <img alt="" src="images/blank.gif" data-echo="images/products/product-16.jpg" />
   </div>
   <div class="body">
       <div class="title">
@@ -515,7 +520,7 @@
   <div class="product-item">
 
     <div class="image">
-      <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-13.jpg" />
+      <img alt="" src="images/blank.gif" data-echo="images/products/product-13.jpg" />
   </div>
   <div class="body">
       <div class="title">
@@ -542,7 +547,7 @@
   <div class="product-item">
     <div class="ribbon blue"><span>new!</span></div> 
     <div class="image">
-      <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-14.jpg" />
+      <img alt="" src="images/blank.gif" data-echo="images/products/product-14.jpg" />
   </div>
   <div class="body">
       <div class="title">

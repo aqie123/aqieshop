@@ -1,14 +1,29 @@
 <?php 
 
 namespace app\models;
-
 use yii\db\ActiveRecord;
-
 use Yii;
-
 use yii\helpers\ArrayHelper;
+// 分类添加更改时候对adminid字段进行插入或更新
+use yii\behaviors\BlameableBehavior;
+
 class Category extends ActiveRecord
 {
+    /**
+     * @return array
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => BlameableBehavior::className(),
+                // 自动添加添加分类的管理员id
+                'createdByAttribute' => 'adminid',
+                'updatedByAttribute' => null,
+                'value' => Yii::$app->admin->id,
+            ],
+        ];
+    }
   public static function tableName()
   {
     return "{{%category}}";
@@ -25,7 +40,7 @@ class Category extends ActiveRecord
   public function rules()
   {
     return [
-      ['parentid','required','message'=>'上级分类不能为空'],
+      ['parentid','required','message'=>'上级分类不能为空','except'=>'rename'],
       ['title','required','message'=>'分类标题不能为空'],
       ['createtime','safe'],
     ];
@@ -40,6 +55,10 @@ class Category extends ActiveRecord
     return false;
   }
 
+    /**
+     * 添加分类页面，将所有分类查询出来
+     * @return array|ActiveRecord[]
+     */
   public function getData()
   {
     $cates = self::find()->all();     // 把所有数据拿出来
@@ -54,6 +73,7 @@ class Category extends ActiveRecord
     foreach($cates as $cate) {
       if($cate['parentid']==$pid){     // 把顶级分类拿出来
         $tree[] = $cate;
+        // 合并数组
         $tree = array_merge($tree,$this->getTree($cates,$cate['cateid']) );  // 把所有子类查询出来
       }
     }
@@ -97,7 +117,11 @@ class Category extends ActiveRecord
     return $options;
   }
 
-  public function getTreelist()   // 获取tree中所有数据
+    /**
+     *  获取tree中所有数据(最开始的分类列表，后面舍弃了)
+     * @return array
+     */
+  public function getTreelist()
   {
     $data = $this->getData();
     $tree = $this->getTree($data);
@@ -106,14 +130,64 @@ class Category extends ActiveRecord
 
   public static function getMenu()    // 前台显示商品分类
   {
-    $top = self::find()->where('parentid = :pid',[":pid"=>0])->limit(8)->orderby('createtime desc')->asArray()->all();
+    $top = self::find()->where('parentid = :pid',[":pid"=>0])->limit(8)->orderby('createtime asc')->asArray()->all();
     $data = [];
     foreach((array)$top as $k=>$cate) {
       $cate['children'] = self::find()->where("parentid  =:pid",[':pid' => $cate['cateid']])->limit(10)->asArray()->all();
       $data[$k] = $cate;
     }
+//    var_dump($data);die;
     return $data;
   }
+
+    /**
+     * 查询所有的顶级分类
+     * @return array
+     */
+  public function getPrimaryCate()
+  {
+      $data = self::find()->where("parentid = :pid",[":pid"=>0]);
+      if(empty($data)){
+          return [];
+      }
+      $pages = new \yii\data\Pagination(['totalCount' => $data->count(), 'pageSize' => '10']);
+      $data = $data->orderBy('createtime')->offset($pages->offset)->limit($pages->limit)->all();
+      if (empty($data)) {
+          return [];
+      }
+      $primary = [];
+      foreach ($data as $cate){
+          $primary[] = [
+              'id'=>$cate->cateid,
+              'text'=>$cate->title,
+              'children'=>$this->getChild($cate->cateid)
+          ];
+      }
+      return ['data'=>$primary,'pages'=>$pages];
+
+  }
+
+    /**
+     * getChild 递归查询所有子类数据
+     * @param $pid
+     * @return array
+     */
+    public function getChild($pid)
+    {
+        $data = self::find()->where('parentid = :pid', [":pid" => $pid])->all();
+        if (empty($data)) {
+            return [];
+        }
+        $children = [];
+        foreach ($data as $child) {
+            $children[] = [
+                "id" => $child->cateid,
+                "text" => $child->title,
+                "children" => $this->getChild($child->cateid)
+            ];
+        }
+        return $children;
+    }
 }
 
 

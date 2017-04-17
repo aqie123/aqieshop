@@ -15,17 +15,22 @@ use dzer\express\Express;
 class OrderController extends CommonController        //　前台controller
 {
   public $layout = "layout2";
-  public function actionCheck(){          // 查询该用户地址信息,该订单下订单详情，快递信息
-    if(Yii::$app->session['isLogin']!=1){
-      return $this->render('member/auth');
-    }
+  protected $mustlogin = ['index', 'check', 'add', 'confirm', 'pay', 'getexpress', 'received'];
+  protected $verbs = [
+        'confirm' => ['post']
+  ];
+
+    public function actionCheck()  // 查询该用户地址信息,该订单下订单详情，快递信息
+  {
+
     $orderid = Yii::$app->request->get('orderid');
     $status = Order::find()->where('orderid =:oid',[':oid'=>$orderid])->one()->status;
+      // 跳回到订单列表，不进入收银台页面
     if($status != Order::CREATEORDER && $status != Order::CHECKORDER) {
-      return $this->redirect(['order/index']);    // 跳回到订单列表，不进入收银台页面
+      return $this->redirect(['order/index']);
     }
-    $loginname = Yii::$app->session['loginname'];
-    $userid = User::find()->where('username = :name or useremail = :email',[':name'=>$loginname,':email'=>$loginname])->one()->userid;
+
+    $userid = Yii::$app->user->id;
     $addresses = Address::find()->where('userid=:uid',[':uid'=>$userid])->asArray()->all();
     $details = OrderDetail::find()->where('orderid = :oid',[':oid'=>$orderid])->asArray()->all();
     $data = [];  //发送数据
@@ -45,36 +50,35 @@ class OrderController extends CommonController        //　前台controller
     ]);
   }
 
-  public function actionIndex(){     // 前台显示用户订单信息
-    if (Yii::$app->session['isLogin'] != 1) {
-        return $this->redirect(['member/auth']);
-    }
-    $loginname = Yii::$app->session['loginname'];
-    $userid = User::find()->where('username = :name or useremail = :email', [':name' => $loginname, ':email' => $loginname])->one()->userid;
+    /**
+     *  前台显示用户订单信息
+     * @return string
+     */
+  public function actionIndex()
+  {
+
+    $userid = Yii::$app->user->id;
     $orders = Order::getProducts($userid);
     return $this->render("index", ['orders' => $orders]);
   }
 
-  public function actionAdd()    // 订单添加
+    /**
+     * 订单添加
+     * @return \yii\web\Response
+     */
+  public function actionAdd()
   {
-    if(Yii::$app->session['isLogin']!=1){
-      return $this->render('member/auth');
-    }
     // 使用事务处理
     $transaction = Yii::$app->db->beginTransaction();
     try {
       //向order表添加数据
       if(Yii::$app->request->isPost){
         $post = Yii::$app->request->post();
+        //echo "<pre>";var_dump($post);die;
         $ordermodel = new Order;
         $ordermodel->scenario = 'add';
         $loginname = Yii::$app->session['loginname'];
-        // $loginemail = Yii::$app->session['loginname'];
-        $usermodel = User::find()->where('username = :name or useremail = :email' ,[':name'=>$loginname,':email'=>$loginname])->one();
-        if(!$usermodel) {
-          throw new \Exception();
-        }
-        $userid= $usermodel->userid; // 获取用户id      // 向order添加数据
+        $userid = Yii::$app->user->id;
         $ordermodel->userid = $userid;
         $ordermodel->status = Order::CREATEORDER;
         $ordermodel->createtime = time();
@@ -110,24 +114,16 @@ class OrderController extends CommonController        //　前台controller
   public function actionConfirm()  
   {
     try{
-      if (Yii::$app->session['isLogin']!=1) {
-        return $this->render('member/auth');
-      }
-
       if (!Yii::$app->request->isPost) {  // 只接受post
           throw new \Exception();
       }
       $post = Yii::$app->request->post();
-      $loginname = Yii::$app->session['loginname'];
-      $usermodel = User::find()->where('username = :name or useremail = :email',[':name' => $loginname,':email'=>$loginname])->one();
-      if(empty($usermodel)){        // 如果用户不存在
-        throw new \Exception();
-      }
-      $userid = $usermodel->userid;
+      $userid = Yii::$app->user->id;
       $model = Order::find()->where('orderid =:oid and userid = :uid',[':oid'=>$post['orderid'],':uid'=>$userid])->one();
       if(empty($model)) {
         throw new \Exception();
       }
+
       $model->scenario = "update";    // 定义场景update
       // 更新字段
       $post['status'] = Order::CHECKORDER;
@@ -147,33 +143,16 @@ class OrderController extends CommonController        //　前台controller
       $post['amount'] = $amount;
       // 把post数据写入   更新shop_order这张表
       $data['Order'] = $post;
-      // if (empty($post['addressid'])) {
-      //   return $this->redirect(['order/pay', 'orderid' => $post['orderid'], 'paymethod' => $post['paymethod']]);
-      // }
       if($model->load($data) && $model->save()){  // 更新数据成功
         return $this->redirect(['order/pay','orderid'=>$post['orderid'],'paymethod'=>$post['paymethod']]);              // 跳转到支付页面
       }
     }catch(\Exception $e){}
-    return $this->redirect(['index/index']);   // 有错跳转回首页      
+    return $this->redirect(['index/index']);   // 有错跳转回首页
   }
 
   public function actionPay()   //跳转到支付网关
   {
-    try{
-      if (Yii::$app->session['isLogin'] != 1) {
-          throw new \Exception();
-      }
-      $orderid = Yii::$app->request->get('orderid');
-      $paymethod = Yii::$app->request->get('paymethod');
-      if(empty($orderid) || empty($paymethod)){
-        throw new \Exception();
-      }
-
-      if($paymethod == 'alipay') {
-        return Pay::alipay($orderid);
-      }
-    }catch(\Exception $e){}
-    return $this->redirect(['order/index']);  // 跳回到订单首页
+    return $this->redirect(['order/index']);
   }
 
 

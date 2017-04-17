@@ -1,9 +1,12 @@
 <?php
     use yii\bootstrap\ActiveForm;
     use yii\helpers\Html;
+    $this->title = '发货';
+    $this->params['breadcrumbs'][] = ['label' => '订单管理', 'url' => ['/admin/order/list']];
+    $this->params['breadcrumbs'][] = $this->title;
 ?>
 <!-- main container -->
-<div class="content">
+
 
     <div class="container-fluid">
         <div id="pad-wrapper" class="users-list">
@@ -39,9 +42,7 @@
             </div>
         </div>
     </div>
-</div><!-- end main container -->
+<!-- end main container -->
 
 
-    <script src="assets/admin/js/jquery-latest.js"></script>
-    <script src="assets/admin/js/bootstrap.min.js"></script>
-    <script src="assets/admin/js/theme.js"></script>
+

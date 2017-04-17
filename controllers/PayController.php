@@ -7,7 +7,10 @@ use Yii;
 
 class PayController extends CommonController
 {
+  protected $except = ['notify'];
+  protected $mustlogin = ['return'];
   public $enableCsrfValidation = false;
+
   public function actionNotify()   //异步通知
   {
     if(Yii::$app->request->isPost) {
